@@ -15,10 +15,8 @@ except ImportError:
     print("nest_asyncio not found. If you encounter event loop issues, consider installing it.")
 
 # This is a dummy tts object since the original code did not provide an initialization.
-class DummyTTS:
-    audio_file = None
-tts = DummyTTS()
-args = None
+#tts = None
+#args = None
 
 def refine_text(text):
     text = text.replace("'", ",")
@@ -33,7 +31,7 @@ def refine_text(text):
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global tts, args
+    #global tts, args
     ## current does basically nothing, might need it in the future however
     yield
 
@@ -49,6 +47,7 @@ async def stream_audio(request: Request):
     voice_cloning_base64 = data['voice_cloning_file']
     voice_cloning_bytes = base64.b64decode(voice_cloning_base64)
     random_filename = f"{uuid.uuid4()}.wav"
+    print(f"NEW VOICE CLONING FILE DETECTED: {random_filename}")
     with open(random_filename, "wb") as f:
         f.write(voice_cloning_bytes)
     tts.audio_file = random_filename
