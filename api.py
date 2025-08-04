@@ -9,7 +9,7 @@ import base64
 from fastrtc import ReplyOnPause, Stream
 from pyngrok import ngrok
 try:
-    import nest_asyncio
+    import nest_asyncio
     nest_asyncio.apply()
 except ImportError:
     print("nest_asyncio not found. If you encounter event loop issues, consider installing it.")
