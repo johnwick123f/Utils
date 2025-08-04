@@ -33,7 +33,7 @@ class WhisperModel:
                 self.process.kill()
             print("vLLM server has been shut down.")
         
-    def transcribe(self, audio_file_path=None, url="http://localhost:2500/v1/audio/transcriptions"):
+    async def transcribe(self, audio_file_path=None, url="http://localhost:2500/v1/audio/transcriptions"):
         time1 = time.time()
         data = {'model': self.model_name, 'response_format': 'json'}
         with open(audio_file_path, 'rb') as audio_file:
