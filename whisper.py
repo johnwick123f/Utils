@@ -3,7 +3,7 @@ import time
 import atexit
 import requests
 import os
-
+import aiohttp
 class WhisperModel:
     """
     A simple class to start and manage a vLLM server process.
