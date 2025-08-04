@@ -6,8 +6,9 @@ import threading
 from fastapi.middleware.cors import CORSMiddleware
 import uuid
 import base64
-from fastrtc import ReplyOnPause, Stream
 from pyngrok import ngrok
+from fastrtc import ReplyOnPause, Stream, AlgoOptions, SileroVadOptions
+
 try:
     import nest_asyncio
     nest_asyncio.apply()
@@ -74,7 +75,14 @@ def run_api(response_function=None, app=None, port=2200):
         response_function = response
     
     stream = Stream(
-        handler=ReplyOnPause(response_function, can_interrupt=True),
+        handler=ReplyOnPause(response_function, can_interrupt=True, algo_options=AlgoOptions(audio_chunk_duration=0.5, started_talking_threshold=0.1, speech_threshold=0.03),
+        model_options=SileroVadOptions(
+            threshold=0.75,
+            min_speech_duration_ms=250,
+            min_silence_duration_ms=1000,
+            speech_pad_ms=400,
+            max_speech_duration_s=15,
+        )),
         modality="audio",
         mode="send-receive"
     )
